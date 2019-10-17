@@ -1,0 +1,32 @@
+{
+	"version": 2,
+	"scope": "secure-smart-lock",
+	"name": "smartlock-api",
+	"env": {
+		"MONGODB_URI": "@mongodb_uri",
+		"SECRET": "@secret",
+		"API_KEY": "@api_key",
+		"MJ_APIKEY_PUBLIC": "@mj_apikey_public",
+		"MJ_APIKEY_PRIVATE": "@mj_apikey_private"
+	},
+	"builds": [
+		{ "src": "user/services/createUser.js", "use": "@now/node" },
+		{ "src": "user/services/getToken.js", "use": "@now/node" }
+	],
+	"routes": [
+		{
+			"src": "/token",
+			"methods": [ "POST" ],
+			"dest": "user/services/getToken.js"
+		},
+		{
+			"src": "/api/account/register",
+			"methods": [ "POST" ],
+			"dest": "user/services/createUser.js"
+		},
+		{
+			"src": "/(.*)",
+			"status": 404
+		}
+	]
+}

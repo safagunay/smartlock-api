@@ -1,0 +1,36 @@
+{
+  "name": "smartlockapi",
+  "version": "1.0.0",
+  "description": "An api with Koa, and Mongoose",
+  "main": "index.js",
+  "scripts": {
+    "test": "\"echo 'no test specified'\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/safagunay/SmartLockApi.git"
+  },
+  "author": "safagunay",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/safagunay/SmartLockApi/issues"
+  },
+  "homepage": "https://github.com/safagunay/SmartLockApi#readme",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "bcrypt": "^3.0.6",
+    "connect-mongoose-lambda": "^0.1.0",
+    "create-koa-lambda": "^0.1.2",
+    "dotenv": "^8.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.10.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-helmet": "^4.2.1",
+    "koa-logger": "^3.2.1",
+    "koa-respond": "^2.1.0",
+    "mongoose": "^5.7.5",
+    "mongoose-key-dict": "^0.1.0",
+    "node-mailjet": "^3.3.1",
+    "randomstring": "^1.1.5"
+  }
+}
