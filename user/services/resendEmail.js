@@ -1,24 +1,15 @@
-const UserModel = require("../models/userModel");
 const EmailCode = require("../models/emailCode");
-const CreateKoaLambda = require("create-koa-lambda");
+const WithAuthKoaLambda = require("../../auth/withAuthKoaLambda");
 const ConnectMongoose = require("connect-mongoose-lambda");
 const sendEmail = require("../helpers/sendEmail");
 require("dotenv").config();
 
-const resendEmail = async (inputModel) => {
-    const email = inputModel.email;
-    user.email = inputModel.email;
-    user.password = inputModel.password;
-    user.firstName = inputModel.firstName;
-    user.lastName = inputModel.lastName;
-    user.mobilePhone = inputModel.mobilePhone;
-    try {
-        await user.validate();
-    } catch (err) {
+const resendEmail = async (user) => {
+    if (user.emailVerified) {
+        const err = new Error("Email already verified.")
         err.status = 400;
         throw err;
     }
-
     ConnectMongoose(undefined, {
         useNewUrlParser: true,
         useCreateIndex: true,
@@ -26,30 +17,33 @@ const resendEmail = async (inputModel) => {
         useUnifiedTopology: true,
         autoIndex: true
     });
-    var res = null;
-    try {
-        res = await user.save();
-    } catch (err) {
-        if (err.code === 11000) {
-            err.status = 400;
-            err.message = "Email is alredy in use";
-            err.data = {
-                email: user.email
-            }
-        }
+
+    const emailCode = new EmailCode();
+    emailCode.email = user.email;
+    const updatedEmailCode = await EmailCode.findOneAndUpdate(
+        { email: user.email },
+        emailCode.toObject(),
+        { new: true }
+    );
+    if (!updatedEmailCode) {
+        //verified users emailcode record may be deleted
+        const err = new Error("Unexpected error: unverified user exist without email code");
+        err.status = 500;
         throw err;
     }
-
-    const emailCode = new EmailCode({ email: res.email });
-    console.log("email code ->", emailCode.code)
-    await emailCode.save();
-    await sendEmail(res.email, emailCode.code);
-    return res;
+    try {
+        sendEmail(updatedEmailCode.email, updatedEmailCode.code);
+    } catch (err) {
+        const error = new Error("Email could not be sent");
+        error.data = err;
+        error.status = 500;
+        throw error;
+    }
 }
 
-module.exports = CreateKoaLambda(app => {
+module.exports = WithAuthKoaLambda(app => {
     app.use(async ctx => {
-        const result = await createUser(ctx.request.body);
+        const result = await resendEmail(ctx.request.user);
         ctx.status = 200;
         ctx.body = result;
     });

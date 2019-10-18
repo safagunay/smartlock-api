@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 //const bcrypt = require("bcrypt");
-const validateEmail = require("../helpers/validateEmail");
-const validatePhoneNumber = require("../helpers/validatePhoneNumber");
+const validateEmail = require("../../validators/validateEmail");
+const validatePhoneNumber = require("../../validators/validatePhoneNumber");
 //const saltRounds = 10;
 
 const userSchema = new Schema(

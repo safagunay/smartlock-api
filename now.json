@@ -9,20 +9,34 @@
 		"MJ_APIKEY_PUBLIC": "@mj_apikey_public",
 		"MJ_APIKEY_PRIVATE": "@mj_apikey_private"
 	},
-	"builds": [
-		{ "src": "user/services/createUser.js", "use": "@now/node" },
-		{ "src": "user/services/getToken.js", "use": "@now/node" }
-	],
-	"routes": [
+	"builds": [{
+			"src": "user/services/createUser.js",
+			"use": "@now/node"
+		},
 		{
+			"src": "user/services/getToken.js",
+			"use": "@now/node"
+		},
+		{
+			"src": "user/services/resendEmail.js",
+			"use": "@now/node"
+		}
+
+	],
+	"routes": [{
 			"src": "/token",
-			"methods": [ "POST" ],
+			"methods": ["POST"],
 			"dest": "user/services/getToken.js"
 		},
 		{
 			"src": "/api/account/register",
-			"methods": [ "POST" ],
+			"methods": ["POST"],
 			"dest": "user/services/createUser.js"
+		},
+		{
+			"src": "/api/account/resendEmail",
+			"methods": ["GET"],
+			"dest": "user/services/resendEmail.js"
 		},
 		{
 			"src": "/(.*)",
