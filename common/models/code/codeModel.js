@@ -1,25 +1,27 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const randomString = require("randomstring");
-const codeDurationMinutes = require("../../config").emailCodeDurationInMinutes + 1;
-const emailCodeSchema = new Schema(
+const modelName = "codes";
+
+const schema = new Schema(
     {
         email: {
             type: String,
             required: true,
-            unique: true
+            index: true
+        },
+        type: {
+            type: String,
+            required: true
         },
         code: {
             type: String,
-            default: () => randomString.generate({
-                length: 4,
-                charset: 'numeric'
-            })
+            required: true,
+            index: true
 
         },
         expiresAt: {
             type: Date,
-            default: () => Date.now() + codeDurationMinutes * 60 * 1000
+            required: true
         }
     }, {
     toObject: {
@@ -36,4 +38,4 @@ const emailCodeSchema = new Schema(
     }
 });
 
-module.exports = mongoose.model("emailCode", emailCodeSchema);
+module.exports = mongoose.model(modelName, schema);

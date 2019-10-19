@@ -1,5 +1,8 @@
 module.exports = {
     senderEmail: "noreply@securesmartlock.com",
-    emailCodeDurationInMinutes: 20,
-    qrCodeDurationInSeconds: 60
+    codeValidDuration: {
+        "email": 20 * 60,
+        "passwordReset": 5 * 60,
+        "qr": 1 * 60
+    }
 }

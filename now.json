@@ -20,6 +20,18 @@
 		{
 			"src": "user/services/resendEmail.js",
 			"use": "@now/node"
+		},
+		{
+			"src": "user/services/verifyEmail.js",
+			"use": "@now/node"
+		},
+		{
+			"src": "user/services/resetPassword.js",
+			"use": "@now/node"
+		},
+		{
+			"src": "user/services/confirmPasswordReset.js",
+			"use": "@now/node"
 		}
 
 	],
@@ -37,6 +49,21 @@
 			"src": "/api/account/resendEmail",
 			"methods": ["GET"],
 			"dest": "user/services/resendEmail.js"
+		},
+		{
+			"src": "/api/account/verifyEmail",
+			"methods": ["POST"],
+			"dest": "user/services/verifyEmail.js"
+		},
+		{
+			"src": "/api/account/resetPassword",
+			"methods": ["POST"],
+			"dest": "user/services/resetPassword.js"
+		},
+		{
+			"src": "/api/account/confirmPasswordReset",
+			"methods": ["POST"],
+			"dest": "user/services/confirmPasswordReset.js"
 		},
 		{
 			"src": "/(.*)",

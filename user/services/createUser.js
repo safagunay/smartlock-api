@@ -1,10 +1,11 @@
 const UserModel = require("../models/userModel");
-const EmailCode = require("../models/emailCode");
+const getCodeDocument = require("../../common/helpers/getCodeDocument");
+const codeTypes = require("../../common/models/code/codeTypes");
 const CreateKoaLambda = require("create-koa-lambda");
 const ConnectMongoose = require("connect-mongoose-lambda");
 const sendEmail = require("../helpers/sendEmail");
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
-console.log("Node env ->", process.env.NODE_ENV);
 
 const createUser = async (inputModel) => {
     const user = new UserModel();
@@ -27,9 +28,9 @@ const createUser = async (inputModel) => {
         useUnifiedTopology: true,
         autoIndex: true
     });
-    var res = null;
+    var savedUser;
     try {
-        res = await user.save();
+        savedUser = await user.save();
     } catch (err) {
         if (err.code === 11000) {
             err.status = 400;
@@ -41,11 +42,24 @@ const createUser = async (inputModel) => {
         throw err;
     }
 
-    const emailCode = new EmailCode({ email: res.email });
-    console.log("email code ->", emailCode.code)
-    await emailCode.save();
-    await sendEmail(res.email, emailCode.code);
-    return res.toObject();
+    const codeType = codeTypes.email;
+    const emailCode = getCodeDocument(codeType, savedUser.email);
+
+    const res = {};
+    try {
+        await emailCode.save();
+        await sendEmail(savedUser.email, emailCode.code, codeType);
+    } catch (err) {
+        console.log("Error: email could not be sent after user is created ->", err);
+        res.data = {
+            emailSent: false
+        };
+        res.message = "Email could not be sent with error " + err;
+    }
+
+    res.user = savedUser.toObject();
+    res.token = jwt.sign(res.user, process.env.SECRET);
+    return res;
 }
 
 module.exports = CreateKoaLambda(app => {
