@@ -32,10 +32,35 @@
 		{
 			"src": "user/services/confirmPasswordReset.js",
 			"use": "@now/node"
+		},
+		{
+			"src": "qrCode/services/getQRCode.js",
+			"use": "@now/node"
+		},
+		{
+			"src": "device/services/admin/createDevice.js",
+			"use": "@now/node"
+		},
+		{
+			"src": "device/services/registerDevice.js",
+			"use": "@now/node"
+		},
+		{
+			"src": "device/services/getOwnedDevices.js",
+			"use": "@now/node"
+		},
+		{
+			"src": "device/services/updateDevice.js",
+			"use": "@now/node"
 		}
 
 	],
 	"routes": [{
+			"src": "/api/qrCode",
+			"methods": ["GET"],
+			"dest": "qrCode/services/getQRCode.js"
+		},
+		{
 			"src": "/token",
 			"methods": ["POST"],
 			"dest": "user/services/getToken.js"
@@ -64,6 +89,26 @@
 			"src": "/api/account/confirmPasswordReset",
 			"methods": ["POST"],
 			"dest": "user/services/confirmPasswordReset.js"
+		},
+		{
+			"src": "/api/admin/device",
+			"methods": ["POST"],
+			"dest": "device/services/admin/createDevice.js"
+		},
+		{
+			"src": "/api/device",
+			"methods": ["POST"],
+			"dest": "device/services/registerDevice.js"
+		},
+		{
+			"src": "/api/device",
+			"methods": ["GET"],
+			"dest": "device/services/getOwnedDevices.js"
+		},
+		{
+			"src": "/api/device",
+			"methods": ["PUT"],
+			"dest": "device/services/updateDevice.js"
 		},
 		{
 			"src": "/(.*)",

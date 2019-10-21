@@ -1,5 +1,5 @@
 const bearerToken = require("koa-bearer-token");
-const CreateKoaLambda = require("create-koa-lambda");
+const CreateKoaLambda = require("../common/modules/create-koa-lambda");
 const jwt = require("jsonwebtoken");
 const ConnectMongoose = require("connect-mongoose-lambda");
 const UserModel = require("../user/models/userModel");
@@ -14,6 +14,7 @@ module.exports = (appHandler, config) => {
                 throw err;
             }
             var user;
+            //TODO : add expiration time to jwt tokens
             try {
                 user = jwt.verify(ctx.request.token, process.env.SECRET);
             } catch (err) {
@@ -29,12 +30,8 @@ module.exports = (appHandler, config) => {
                 useUnifiedTopology: true,
                 autoIndex: true
             });
-            user = await UserModel.findOne({ email: user.email, password: user.password });
-            if (!user) {
-                const err = new Error("Password has changed.");
-                err.status = 401;
-                throw err;
-            }
+            user = await UserModel.findOne({ email: user.email });
+            if (!user) throw Error("User not found");
             ctx.request.user = user;
             return next();
         });

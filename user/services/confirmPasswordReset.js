@@ -1,7 +1,7 @@
 const CodeModel = require("../../common/models/code/codeModel");
 const UserModel = require("../models/userModel");
 const codeTypes = require("../../common/models/code/codeTypes");
-const CreateKoaLambda = require("create-koa-lambda");
+const CreateKoaLambda = require("");
 const ConnectMongoose = require("connect-mongoose-lambda");
 const emailValidator = require("../../validators/validateEmail");
 require("dotenv").config();

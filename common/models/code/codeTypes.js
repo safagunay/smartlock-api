@@ -1,4 +1,5 @@
 const config = require("../../../config");
+const randomstring = require("randomstring");
 module.exports = {
     email: {
         name: "email",
@@ -13,9 +14,9 @@ module.exports = {
         charset: "numeric"
     },
     qr: {
-        name: "passwordReset",
-        duration: config.codeValidDuration["passwordReset"],
-        length: 4,
+        name: "qr",
+        duration: config.codeValidDuration["qr"],
+        length: 32,
         charset: "alphanumeric"
     }
 }

@@ -1,21 +1,32 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const randomString = require("randomstring");
-const codeDurationSeconds = require("../config").qrCodeDurationInSeconds + 5;
-const qrCodeSchema = new Schema(
+
+const schema = new Schema(
     {
+        deviceOwnerEmail: {
+            type: String,
+            required: true
+        },
         email: {
             type: String,
             required: true
         },
-        code: {
+        description: {
             type: String,
-            default: () => randomString.generate()
-
+            maxlength: 50,
+            trim: true,
+        },
+        deviceCode: {
+            type: String,
+            required: true,
+            index: true
+        },
+        isDeleted: {
+            type: Boolean,
+            default: false
         },
         expiresAt: {
-            type: Date,
-            default: () => Date.now() + codeDurationSeconds * 1000
+            type: Date
         }
     }, {
     toObject: {
@@ -32,4 +43,4 @@ const qrCodeSchema = new Schema(
     }
 });
 
-module.exports = mongoose.model("qrCode", qrCodeSchema);
+module.exports = mongoose.model("devicePermissions", schema);

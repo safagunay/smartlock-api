@@ -1,5 +1,5 @@
 const UserModel = require("../models/userModel");
-const CreateKoaLambda = require("create-koa-lambda");
+const CreateKoaLambda = require("../../common/modules/create-koa-lambda");
 const ConnectMongoose = require("connect-mongoose-lambda");
 const jwt = require("jsonwebtoken");
 console.log("Node env ->", process.env.NODE_ENV);

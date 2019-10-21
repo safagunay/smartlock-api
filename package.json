@@ -20,7 +20,6 @@
     "axios": "^0.19.0",
     "bcrypt": "^3.0.6",
     "connect-mongoose-lambda": "^0.1.0",
-    "create-koa-lambda": "^0.1.2",
     "dotenv": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.10.0",

@@ -1,7 +1,7 @@
 const UserModel = require("../models/userModel");
 const getCodeDocument = require("../../common/helpers/getCodeDocument");
 const codeTypes = require("../../common/models/code/codeTypes");
-const CreateKoaLambda = require("create-koa-lambda");
+const CreateKoaLambda = require("../../common/modules/create-koa-lambda");
 const ConnectMongoose = require("connect-mongoose-lambda");
 const sendEmail = require("../helpers/sendEmail");
 const jwt = require("jsonwebtoken");
@@ -68,4 +68,4 @@ module.exports = CreateKoaLambda(app => {
         ctx.status = 200;
         ctx.body = result;
     });
-})
+});
