@@ -3,7 +3,6 @@ const UserModel = require("../models/userModel");
 const codeTypes = require("../../common/models/code/codeTypes");
 const WithAuthKoaLambda = require("../../auth/withAuthKoaLambda");
 const ConnectMongoose = require("connect-mongoose-lambda");
-require("dotenv").config();
 
 const verifyEmail = async (user, reqBody) => {
     if (user.emailVerified) {

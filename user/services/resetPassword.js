@@ -6,7 +6,6 @@ const CreateKoaLambda = require("../../common/modules/create-koa-lambda");
 const ConnectMongoose = require("connect-mongoose-lambda");
 const sendEmail = require("../helpers/sendEmail");
 const emailValidator = require("../../validators/validateEmail");
-require("dotenv").config();
 
 const resetPassword = async (reqBody) => {
     if (!reqBody.email || typeof reqBody.email !== "string") {

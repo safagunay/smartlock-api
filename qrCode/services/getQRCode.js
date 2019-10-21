@@ -3,7 +3,6 @@ const codeTypes = require("../../common/models/code/codeTypes");
 const getCodeDocument = require("../../common/helpers/getCodeDocument");
 const WithAuthKoaLambda = require("../../auth/withAuthKoaLambda");
 const ConnectMongoose = require("connect-mongoose-lambda");
-require("dotenv").config();
 
 const getQRCode = async (user) => {
     ConnectMongoose(undefined, {

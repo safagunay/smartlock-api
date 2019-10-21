@@ -4,7 +4,6 @@ const codeTypes = require("../../common/models/code/codeTypes");
 const WithAuthKoaLambda = require("../../auth/withAuthKoaLambda");
 const ConnectMongoose = require("connect-mongoose-lambda");
 const sendEmail = require("../helpers/sendEmail");
-require("dotenv").config();
 
 const resendEmail = async (user) => {
     //TODO : if user claims change, invalidate the old token

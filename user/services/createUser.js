@@ -5,7 +5,6 @@ const CreateKoaLambda = require("../../common/modules/create-koa-lambda");
 const ConnectMongoose = require("connect-mongoose-lambda");
 const sendEmail = require("../helpers/sendEmail");
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
 
 const createUser = async (inputModel) => {
     const user = new UserModel();

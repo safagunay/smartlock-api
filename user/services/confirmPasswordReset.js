@@ -4,7 +4,6 @@ const codeTypes = require("../../common/models/code/codeTypes");
 const CreateKoaLambda = require("");
 const ConnectMongoose = require("connect-mongoose-lambda");
 const emailValidator = require("../../validators/validateEmail");
-require("dotenv").config();
 
 const confirmPasswordReset = async (reqBody) => {
     if (!reqBody.code || typeof reqBody.code !== "string") {

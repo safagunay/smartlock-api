@@ -3,7 +3,6 @@ const CreateKoaLambda = require("../../common/modules/create-koa-lambda");
 const ConnectMongoose = require("connect-mongoose-lambda");
 const jwt = require("jsonwebtoken");
 console.log("Node env ->", process.env.NODE_ENV);
-require("dotenv").config();
 
 const getToken = async (inputModel) => {
     var user = new UserModel();
