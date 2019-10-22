@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const emailValidator = require("../../validators/validateEmail");
 const Schema = mongoose.Schema;
 
 const schema = new Schema(
@@ -9,24 +10,28 @@ const schema = new Schema(
         },
         email: {
             type: String,
-            required: true
+            required: true,
+            validate: emailValidator
         },
         description: {
             type: String,
-            maxlength: 50,
+            maxlength: 250,
             trim: true,
         },
         deviceCode: {
             type: String,
             required: true,
+            maxlength: 50,
+            minlength: 12,
+            trim: true,
             index: true
         },
-        isDeleted: {
-            type: Boolean,
-            default: false
-        },
         expiresAt: {
-            type: Date
+            type: Date,
+            validate: {
+                validator: (val) => val > Date.now(),
+                message: "expiration date must be a future date"
+            }
         }
     }, {
     toObject: {
@@ -42,5 +47,9 @@ const schema = new Schema(
         }
     }
 });
+
+schema.virtual('isExpired').get(function () {
+    return this.expiresAt < Date.now();
+})
 
 module.exports = mongoose.model("devicePermissions", schema);

@@ -52,6 +52,22 @@
 		{
 			"src": "device/services/updateDevice.js",
 			"use": "@now/node"
+		},
+		{
+			"src": "devicePermission/services/addPermission.js",
+			"use": "@now/node"
+		},
+		{
+			"src": "devicePermission/services/updatePermission.js",
+			"use": "@now/node"
+		},
+		{
+			"src": "devicePermission/services/deletePermission.js",
+			"use": "@now/node"
+		},
+		{
+			"src": "devicePermission/services/getDevicePermissions.js",
+			"use": "@now/node"
 		}
 
 	],
@@ -109,6 +125,26 @@
 			"src": "/api/device",
 			"methods": ["PUT"],
 			"dest": "device/services/updateDevice.js"
+		},
+		{
+			"src": "/api/devicePermission",
+			"methods": ["POST"],
+			"dest": "devicePermission/services/addPermission.js"
+		},
+		{
+			"src": "/api/devicePermission",
+			"methods": ["PUT"],
+			"dest": "devicePermission/services/updatePermission.js"
+		},
+		{
+			"src": "/api/devicePermission",
+			"methods": ["DELETE"],
+			"dest": "devicePermission/services/deletePermission.js"
+		},
+		{
+			"src": "/api/devicePermission",
+			"methods": ["GET"],
+			"dest": "devicePermission/services/getDevicePermissions.js"
 		},
 		{
 			"src": "/(.*)",

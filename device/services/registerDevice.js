@@ -3,6 +3,11 @@ const WithAuthKoaLambda = require("../../auth/withAuthKoaLambda");
 const ConnectMongoose = require("connect-mongoose-lambda");
 
 const registerDevice = async (reqBody, user) => {
+    if (!user.emailVerified) {
+        const err = new Error("user's email is not verified.");
+        err.status = 400;
+        throw err;
+    }
     var deviceCode = reqBody.code;
     var deviceName = reqBody.name;
     if (!deviceCode || typeof deviceCode !== "string") {
