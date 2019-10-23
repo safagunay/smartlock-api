@@ -68,6 +68,10 @@
 		{
 			"src": "devicePermission/services/getDevicePermissions.js",
 			"use": "@now/node"
+		},
+		{
+			"src": "devicePermission/services/checkPermission.js",
+			"use": "@now/node"
 		}
 
 	],
@@ -145,6 +149,11 @@
 			"src": "/api/devicePermission",
 			"methods": ["GET"],
 			"dest": "devicePermission/services/getDevicePermissions.js"
+		},
+		{
+			"src": "/api/device/checkpermission",
+			"methods": ["POST"],
+			"dest": "devicePermission/services/checkPermission.js"
 		},
 		{
 			"src": "/(.*)",

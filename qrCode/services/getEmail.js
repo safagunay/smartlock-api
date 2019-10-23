@@ -12,12 +12,11 @@ const getUserEmail = async (qrCode) => {
         err.status = 400;
         throw err;
     }
-    qrCode = qrCode.trim();
-    if (qrCode.length < codeType.length) {
-        const err = new Error("Invalid QRCode");
-        err.status = 400;
-        throw err;
-    }
+    // if (qrCode.length < codeType.length) {
+    //     const err = new Error("Invalid QRCode");
+    //     err.status = 400;
+    //     throw err;
+    // }
     ConnectMongoose(undefined, {
         useNewUrlParser: true,
         useCreateIndex: true,
@@ -28,10 +27,11 @@ const getUserEmail = async (qrCode) => {
 
     const code = await CodeModel.findOne({
         code: qrCode,
-        type: codeType.name
+        type: codeType.name,
+        expiresAt: { $gte: Date.now() }
     });
-    if (!code || code.expiresAt < Date.now()) {
-        const err = new Error("Invalid QRCode");
+    if (!code) {
+        const err = new Error("Email not found from QRCode");
         err.status = 400;
         throw err;
     }
