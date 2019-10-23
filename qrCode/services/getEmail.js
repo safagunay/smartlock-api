@@ -28,7 +28,7 @@ const getUserEmail = async (qrCode) => {
     const code = await CodeModel.findOne({
         code: qrCode,
         type: codeType.name,
-        expiresAt: { $gte: Date.now() }
+        expiresAt: { $gte: Date.now() - 5000 }
     });
     if (!code) {
         const err = new Error("Email not found from QRCode");
