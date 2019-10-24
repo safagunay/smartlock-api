@@ -60,7 +60,7 @@ const checkPermission = async (reqBody) => {
     }
 
     //add log to blockchain and return the result
-    addLogToDevice(device.code, log);
+    await addLogToDevice(device.code, log);
     if (err.message) throw err;
     return emailResult.email;
 }
