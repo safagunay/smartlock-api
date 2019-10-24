@@ -7,7 +7,11 @@
 		"SECRET": "@secret",
 		"API_KEY": "@api_key",
 		"MJ_APIKEY_PUBLIC": "@mj_apikey_public",
-		"MJ_APIKEY_PRIVATE": "@mj_apikey_private"
+		"MJ_APIKEY_PRIVATE": "@mj_apikey_private",
+		"REMOTE_NODE": "@remote_node",
+		"CONTRACT_ADDRESS": "@contract_address",
+		"CONTRACT_OWNER_ACCOUNT": "@contract_owner_account",
+		"ACCOUNT_PK": "@account_pk"
 	},
 	"builds": [{
 			"src": "user/services/createUser.js",
@@ -39,6 +43,10 @@
 		},
 		{
 			"src": "device/services/admin/createDevice.js",
+			"use": "@now/node"
+		},
+		{
+			"src": "device/services/admin/getDeviceLogs.js",
 			"use": "@now/node"
 		},
 		{
@@ -114,6 +122,11 @@
 			"src": "/api/admin/device",
 			"methods": ["POST"],
 			"dest": "device/services/admin/createDevice.js"
+		},
+		{
+			"src": "/api/admin/deviceLog",
+			"methods": ["GET"],
+			"dest": "device/services/admin/getDeviceLogs.js"
 		},
 		{
 			"src": "/api/device",

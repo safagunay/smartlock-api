@@ -1,0 +1,37 @@
+[{
+    "inputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "constructor",
+    "signature": "constructor"
+}, {
+    "constant": false,
+    "inputs": [{
+        "name": "devId",
+        "type": "uint256"
+    }, {
+        "name": "log",
+        "type": "string"
+    }],
+    "name": "addLog",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "signature": "0x36d10002"
+}, {
+    "constant": true,
+    "inputs": [{
+        "name": "devId",
+        "type": "uint256"
+    }],
+    "name": "getLogs",
+    "outputs": [{
+        "name": "",
+        "type": "string"
+    }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function",
+    "signature": "0x1124c05a"
+}]

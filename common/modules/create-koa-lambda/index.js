@@ -16,10 +16,13 @@ const createKoaLambda = (appHandler, config) => {
   const Koa = require("koa");
   const app = new Koa();
 
-  //TODO: implement apiKey message filter
-  // app.use(async (ctx, next) => {
-  //   next();
-  // })
+  app.use(async (ctx, next) => {
+    const apiKey = ctx.headers["apikey"];
+    if (apiKey === process.env.API_KEY)
+      return next();
+    ctx.status = 400;
+    ctx.body = "Invalid APIKey";
+  });
 
   if (!config) {
     config = {};

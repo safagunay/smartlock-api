@@ -3,3 +3,4 @@ node_modules/
 *.lock
 *-lock.json
 .env*
+deviceActivityLogger/deployment-info.txt
