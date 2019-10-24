@@ -17,7 +17,7 @@ const addLogToDevice = async (devCode, log) => {
             nonce: count,
             to: address,
             data: tx,
-            gas: 5000000
+            gas: 500000000
         }, process.env.ACCOUNT_PK);
         const receipt = await web3.eth.sendSignedTransaction(tx_signed.rawTransaction);
         console.log(receipt);
