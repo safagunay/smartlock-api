@@ -6,8 +6,6 @@ const ConnectMongoose = require("connect-mongoose-lambda");
 const sendEmail = require("../helpers/sendEmail");
 
 const resendEmail = async (user) => {
-    //TODO : if user claims change, invalidate the old token
-    //or assume that client app uses latest token
     if (user.emailVerified) {
         const err = new Error("Email already verified.")
         err.status = 400;

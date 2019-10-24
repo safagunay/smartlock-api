@@ -1,14 +1,9 @@
-const getLogs = require("../../../deviceActivityLogger").getDeviceLogs;
-const DeviceModel = require("../../models/device");
-const WithAuthKoaLambda = require("../../../auth/withAuthKoaLambda");
+const getLogs = require("../../deviceActivityLogger").getDeviceLogs;
+const DeviceModel = require("../models/device");
+const WithAuthKoaLambda = require("../../auth/withAuthKoaLambda");
 const ConnectMongoose = require("connect-mongoose-lambda");
 
 const getDeviceLogs = async (user, reqBody) => {
-    if (!user.roles || !user.roles.includes("admin")) {
-        const err = new Error();
-        err.status = 401;
-        throw err;
-    }
     ConnectMongoose(undefined, {
         useNewUrlParser: true,
         useCreateIndex: true,
@@ -17,7 +12,7 @@ const getDeviceLogs = async (user, reqBody) => {
         autoIndex: true
     });
 
-    const device = await DeviceModel.findOne({ code: reqBody.deviceCode });
+    const device = await DeviceModel.findOne({ code: reqBody.deviceCode, ownerEmail: user.email });
     if (!device) {
         const error = new Error("Device not found.");
         error.status = 400;

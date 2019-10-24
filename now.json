@@ -46,7 +46,7 @@
 			"use": "@now/node"
 		},
 		{
-			"src": "device/services/admin/getDeviceLogs.js",
+			"src": "device/services/getDeviceLogs.js",
 			"use": "@now/node"
 		},
 		{
@@ -124,9 +124,9 @@
 			"dest": "device/services/admin/createDevice.js"
 		},
 		{
-			"src": "/api/admin/deviceLog",
+			"src": "/api/devicelog",
 			"methods": ["GET"],
-			"dest": "device/services/admin/getDeviceLogs.js"
+			"dest": "device/services/getDeviceLogs.js"
 		},
 		{
 			"src": "/api/device",

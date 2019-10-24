@@ -17,55 +17,52 @@ const checkPermission = async (reqBody) => {
         autoIndex: true
     });
 
-    const emailResult = await getEmailFromQR(qrCode);
-
+    //find device
     const device = await DeviceModel.findOne({
         secret: deviceSecret
     });
-
     if (!device) {
         const err = new Error("Device not found.");
         err.status = 400;
         throw err;
     }
 
-    // add log to blockchain
-    const log = { time: Date.now() };
+    //find user
+    const emailResult = await getEmailFromQR(qrCode);
+
+    // build log and err objects
+    const log = { time: Date.now(), isSuccessful: true, email: "unknown" };
+    const err = new Error();
+    err.status = 400;
     if (emailResult) {
         log.email = emailResult.email;
-        log.isSuccessful = !emailResult.isExpired;
+        if (emailResult.isExpired) {
+            log.isSuccessful = false;
+            err.message = "QRCode expired";
+        }
+        else if (device.ownerEmail !== emailResult.email) {
+            const permission = await DevicePermission.findOne(
+                {
+                    email: emailResult.email,
+                    deviceCode: device.code,
+                    expiresAt: { $gte: Date.now() }
+                }
+            );
+            if (!permission) {
+                log.isSuccessful = false;
+                err.message = "Permission not found.";
+            }
+        }
     }
     else {
-        log.email = "unknown";
         log.isSuccessful = false;
+        err.message = "QRCode not found";
     }
 
+    //add log to blockchain and return the result
     addLogToDevice(device.code, log);
-
-    if (emailResult.isExpired) {
-        const err = new Error("QRCode expired");
-        err.status = 400;
-        throw err;
-    }
-
-    if (device.ownerEmail === email) return email;
-
-    const permission = await DevicePermission.findOne(
-        {
-            email: email,
-            deviceCode: device.code,
-            expiresAt: { $gte: Date.now() }
-        }
-    );
-
-    if (!permission) {
-        const err = new Error("Permission not found.");
-        err.status = 400;
-        throw err;
-    }
-
-    return email;
-
+    if (err.message) throw err;
+    return emailResult.email;
 }
 
 module.exports = CreateKoaLambda(app => {
