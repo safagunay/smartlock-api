@@ -4,3 +4,4 @@ node_modules/
 *-lock.json
 .env*
 deviceActivityLogger/deployment-info.txt
+mq-config.xml

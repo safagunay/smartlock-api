@@ -1,7 +1,7 @@
 const Web3 = require("web3");
-const web3 = new Web3(process.env.REMOTE_NODE);
 const abi = require("./abi.json");
-const address = web3.utils.toChecksumAddress(process.env.CONTRACT_ADDRESS);
+const address = Web3.utils.toChecksumAddress(process.env.CONTRACT_ADDRESS);
+const web3 = new Web3(process.env.REMOTE_NODE);
 const contract = new web3.eth.Contract(abi, address, {
     from: process.env.CONTRACT_OWNER_ACCOUNT
 });
@@ -9,6 +9,7 @@ const contract = new web3.eth.Contract(abi, address, {
 const addLogToDevice = async (devCode, log) => {
     const logString = `${log.email},${log.time},${log.isSuccessful};`;
     const devCodeInt = parseInt(devCode);
+
     try {
         const count = await web3.eth.getTransactionCount(process.env.CONTRACT_OWNER_ACCOUNT);
         console.log("nonce ->", count);
@@ -17,7 +18,7 @@ const addLogToDevice = async (devCode, log) => {
             nonce: count,
             to: address,
             data: tx,
-            gas: 500000000
+            gas: 5000000
         }, process.env.ACCOUNT_PK);
         const receipt = await web3.eth.sendSignedTransaction(tx_signed.rawTransaction);
         console.log(receipt);
