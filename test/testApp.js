@@ -8,7 +8,13 @@ require("dotenv").config();
 const web3 = new Web3(process.env.REMOTE_NODE);
 
 const getCount = async () => {
-    ConnectMongoose();
+    ConnectMongoose(undefined, {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useFindAndModify: false,
+        useUnifiedTopology: true,
+        autoIndex: true
+    });
     const nonce = await web3.eth.getTransactionCount(process.env.CONTRACT_OWNER_ACCOUNT);
     console.log(nonce);
     const docs = await NonceModel.find({});
@@ -16,8 +22,8 @@ const getCount = async () => {
     // const doc = new NonceModel();
     // doc.value = nonce;
     // await doc.save();
-    // const getDoc = await NonceModel.findOneAndUpdate({}, { $inc: { 'value': 1 } });
-    // console.log(getDoc.value);
+    const getDoc = await NonceModel.findOneAndUpdate({}, { value: nonce }, { new: true });
+    console.log("updated ->", getDoc.value);
 }
 
 getCount();

@@ -11,7 +11,8 @@
 		"REMOTE_NODE": "@remote_node",
 		"CONTRACT_ADDRESS": "@contract_address",
 		"CONTRACT_OWNER_ACCOUNT": "@contract_owner_account",
-		"ACCOUNT_PK": "@account_pk"
+		"ACCOUNT_PK": "@account_pk",
+		"APIKEY_BLOCKCHAIN": "@apikey_blockchain"
 	},
 	"builds": [{
 			"src": "user/services/createUser.js",

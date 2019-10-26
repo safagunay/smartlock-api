@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/safagunay/SmartLockApi#readme",
   "dependencies": {
+    "axios": "^0.19.0",
     "connect-mongoose-lambda": "^0.1.0",
     "dotenv": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
@@ -27,9 +28,7 @@
     "koa-logger": "^3.2.1",
     "koa-respond": "^2.1.0",
     "mongoose": "^5.7.5",
-    "mongoose-key-dict": "^0.1.0",
     "node-mailjet": "^3.3.1",
-    "randomstring": "^1.1.5",
-    "web3": "^1.2.2"
+    "randomstring": "^1.1.5"
   }
 }
