@@ -68,8 +68,7 @@ const checkPermission = async (reqBody) => {
 module.exports = CreateKoaLambda(app => {
     app.use(async ctx => {
         const result = await checkPermission(
-            ctx.request.body,
-            ctx.request.user
+            ctx.request.body
         );
         ctx.status = 200;
         ctx.body = result;
