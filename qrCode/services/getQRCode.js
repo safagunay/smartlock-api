@@ -25,6 +25,7 @@ const getQRCode = async (user) => {
 
     return {
         QRCode: savedQRCode.code,
+        Email: savedQRCode.email,
         DurationInSeconds: codeType.duration,
         ExpiresOnUTC: savedQRCode.expiresAt
     }

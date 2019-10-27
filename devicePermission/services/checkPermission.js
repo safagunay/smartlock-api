@@ -31,8 +31,10 @@ const checkPermission = async (reqBody) => {
     const emailResult = await getEmailFromQR(qrCode);
 
     // build log and err objects
-    const log = { time: Date.now(), isSuccessful: true, email: "unknown" };
+    const log = { time: emailResult.time, isSuccessful: true, email: "unknown" };
     const err = new Error();
+    err.data = {};
+    err.data.log = log;
     err.status = 400;
     if (emailResult) {
         log.email = emailResult.email;
@@ -62,7 +64,7 @@ const checkPermission = async (reqBody) => {
     //add log to blockchain and return the result
     addLogToDevice(device.code, log);
     if (err.message) throw err;
-    return emailResult.email;
+    return log;
 }
 
 module.exports = CreateKoaLambda(app => {

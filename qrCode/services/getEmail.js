@@ -10,12 +10,16 @@ const getUserEmail = async (qrCode) => {
         code: qrCode,
         type: codeType.name
     });
+    const time = Date.now();
     if (code) return {
         email: code.email,
-        isExpired: code.expiresAt < (Date.now() - 3000)
+        isExpired: code.expiresAt < (time - 3000),
+        time: time
     }
 
-    return code;
+    return {
+        time: time
+    }
 }
 
 module.exports = getUserEmail;
