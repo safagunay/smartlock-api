@@ -1,15 +1,17 @@
 const axios = require("./axios");
-const addLogToDevice = async (data) => {
+const addLogToDevice = (data) => {
     const options = {
         method: 'post',
         data: data
     };
     try {
-        const res = await axios(options);
-        console.log(res.data);
+        axios(options);
     } catch (err) {
         console.log(err);
     }
+    // await new Promise((resolve, reject) => {
+    //     setTimeout(() => resolve(), 100);
+    // })
 }
 
 const getDeviceLogs = async (devCode) => {
