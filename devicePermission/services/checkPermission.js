@@ -36,7 +36,7 @@ const checkPermission = async (reqBody) => {
     err.data = {};
     err.data.log = log;
     err.status = 400;
-    if (emailResult) {
+    if (emailResult.email) {
         log.email = emailResult.email;
         if (emailResult.isExpired) {
             log.isSuccessful = 0;
