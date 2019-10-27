@@ -31,7 +31,7 @@ const checkPermission = async (reqBody) => {
     const emailResult = await getEmailFromQR(qrCode);
 
     // build log and err objects
-    const log = { time: emailResult.time, isSuccessful: true, email: "unknown" };
+    const log = { time: emailResult.time, isSuccessful: 1, email: "unknown" };
     const err = new Error();
     err.data = {};
     err.data.log = log;
@@ -39,7 +39,7 @@ const checkPermission = async (reqBody) => {
     if (emailResult) {
         log.email = emailResult.email;
         if (emailResult.isExpired) {
-            log.isSuccessful = false;
+            log.isSuccessful = 0;
             err.message = "QRCode expired";
         }
         else if (device.ownerEmail !== emailResult.email) {
@@ -51,13 +51,13 @@ const checkPermission = async (reqBody) => {
                 }
             );
             if (!permission) {
-                log.isSuccessful = false;
+                log.isSuccessful = 0;
                 err.message = "Permission not found.";
             }
         }
     }
     else {
-        log.isSuccessful = false;
+        log.isSuccessful = 0;
         err.message = "QRCode not found";
     }
 
