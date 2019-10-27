@@ -1,16 +1,23 @@
-const axios = require("./axios");
+const axios = require("axios");
+const serviceURL = "http://3.19.59.143:3000";
+const instance = axios.create({
+    baseURL: serviceURL,
+    headers: { 'apikey': process.env.APIKEY_BLOCKCHAIN }
+});
+
+const io = require('socket.io-client');
 const addLogToDevice = async (data) => {
-    const options = {
-        method: 'post',
-        data: data
-    };
-    try {
-        axios(options);
-    } catch (err) {
-        console.log(err);
-    }
     await new Promise((resolve, reject) => {
-        setTimeout(() => resolve(), 100);
+        const socket = io(serviceURL);
+        socket.on('connect', () => {
+            socket.emit('log', data);
+            socket.disconnect();
+            resolve();
+        });
+        const printErr = (err) => { console.log("Socket connection error", err); resolve(); }
+        socket.on("connect_error", printErr);
+        socket.on("connect_timeout", printErr)
+        socket.on("error", printErr);
     })
 }
 
@@ -21,7 +28,7 @@ const getDeviceLogs = async (devCode) => {
             deviceCode: devCode
         }
     }
-    const res = await axios(options);
+    const res = await instance(options);
     return res.data;
 }
 

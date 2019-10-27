@@ -63,7 +63,7 @@ const checkPermission = async (reqBody) => {
     const data = {
         log: log,
         deviceCode: device.code
-    }
+    };
     await addLogToDevice(data);
     if (err.message) {
         err.data = data;
