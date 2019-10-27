@@ -1,11 +1,8 @@
 const axios = require("./axios");
-const addLogToDevice = async (devCode, log) => {
+const addLogToDevice = async (data) => {
     const options = {
         method: 'post',
-        data: {
-            deviceCode: devCode,
-            log: log
-        }
+        data: data
     };
     try {
         const res = await axios(options);

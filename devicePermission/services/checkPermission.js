@@ -33,8 +33,6 @@ const checkPermission = async (reqBody) => {
     // build log and err objects
     const log = { time: emailResult.time, isSuccessful: 1, email: "unknown" };
     const err = new Error();
-    err.data = {};
-    err.data.log = log;
     err.status = 400;
     if (emailResult.email) {
         log.email = emailResult.email;
@@ -62,9 +60,16 @@ const checkPermission = async (reqBody) => {
     }
 
     //add log to blockchain and return the result
-    addLogToDevice(device.code, log);
-    if (err.message) throw err;
-    return log;
+    const data = {
+        log: log,
+        deviceCode: device.code
+    }
+    addLogToDevice(data);
+    if (err.message) {
+        err.data = data;
+        throw err;
+    }
+    return data;
 }
 
 module.exports = CreateKoaLambda(app => {
