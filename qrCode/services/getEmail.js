@@ -13,7 +13,7 @@ const getUserEmail = async (qrCode) => {
     const time = Date.now();
     if (code) return {
         email: code.email,
-        isExpired: code.expiresAt < (time - 3000),
+        isExpired: code.expiresAt < (time - 3800),
         time: time
     }
 
